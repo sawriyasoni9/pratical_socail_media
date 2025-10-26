@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "201939249577",
+    "project_id": "socialpost-d6f3b",
+    "storage_bucket": "socialpost-d6f3b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:201939249577:android:ce0b7db87d8c535dc3bcb8",
+        "android_client_info": {
+          "package_name": "com.socailPost"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcVKgGum8bPaauC5BKf3BZDcO6m6cPVt4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
