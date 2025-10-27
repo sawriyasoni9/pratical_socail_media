@@ -8,22 +8,22 @@ import 'package:practical_social_media/service/firebase_service.dart';
 class PostRepository {
   final FirebaseService _firebaseService = FirebaseService();
 
+  /// To get current logged-in user data
   Future<UserModel?> getCurrentUser() {
     return _firebaseService.getCurrentUserData();
   }
 
+  /// To add a new post
   Future<void> addPost({required PostModel post}) {
     return _firebaseService.storePost(post: post);
   }
 
+  /// To get real-time updates of posts
   Stream<QuerySnapshot<Map<String, dynamic>>> postStream({String? userId, int limit = 10}) {
     return _firebaseService.getStream();
   }
 
-  // Stream<PostModelData> getPosts({String? userId, int limit = 10, DocumentSnapshot? lastDoc,}) {
-  //   return _firebaseService.fetchPosts(userId: userId, limit: limit, lastDoc: lastDoc);
-  // }
-
+  /// To get posts with pagination
   Future<PostModelData> getPosts({
     String? userId,
     int limit = 10,

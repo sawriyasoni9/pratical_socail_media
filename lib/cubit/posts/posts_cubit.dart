@@ -11,12 +11,11 @@ class PostsCubit extends Cubit<PostsState> {
 
   PostsCubit({required this.postRepository}) : super(PostsInitialState());
   UserModel? userModel;
-  List<PostModel> _postData = [];
   List<PostModel> filteredPosts = [];
   PostFilterType currentFilter = PostFilterType.all;
   DocumentSnapshot? lastDoc;
 
-  /// 📝 Add a new post
+  /// 📝 fetch current logged-in user
   void fetchCurrentUser() async {
     try {
       final userData = await postRepository.getCurrentUser();
@@ -45,6 +44,7 @@ class PostsCubit extends Cubit<PostsState> {
     }
   }
 
+  /// To listen for new posts in real-time
   void configureListener() {
     postRepository.postStream().listen((snapshot) {
       for (var change in snapshot.docChanges) {
@@ -56,7 +56,9 @@ class PostsCubit extends Cubit<PostsState> {
     });
   }
 
-  /// Fetch posts in real-time and store them in local postData list
+  /// To fetch posts with pagination
+  /// [showLoader] to show loading indicator
+  /// Apply filter based on [currentFilter]
   void fetchPosts({bool showLoader = false}) async {
     if (showLoader) {
       emit(PostsLoadingState());
@@ -88,7 +90,7 @@ class PostsCubit extends Cubit<PostsState> {
     emit(FetchPostSuccessState());
   }
 
-  /// Fetch posts in real-time and store them in local postData list
+  /// To logout user
   void logout() async {
     emit(PostsLoadingState());
     try {
@@ -99,38 +101,10 @@ class PostsCubit extends Cubit<PostsState> {
     }
   }
 
+  /// To apply filter on posts
   void applyFilter(PostFilterType filter) {
     currentFilter = filter;
     lastDoc = null;
     fetchPosts();
   }
-
-  /// Filter posts
-  // void applyFilter(PostFilterType filter, {String? currentUserId}) {
-  //   currentFilter = filter;
-  //   List<PostModel> tempList = [];
-  //
-  //   switch (filter) {
-  //     case PostFilterType.myPosts:
-  //       tempList =
-  //           _postData.where((post) => post.userId == currentUserId).toList();
-  //       break;
-  //
-  //     case PostFilterType.today:
-  //       final now = DateTime.now();
-  //       tempList =
-  //           _postData.where((post) {
-  //             final created = post.createdAt ?? DateTime(2000);
-  //             return created.year == now.year &&
-  //                 created.month == now.month &&
-  //                 created.day == now.day;
-  //           }).toList();
-  //       break;
-  //
-  //     case PostFilterType.all:
-  //       tempList = _postData;
-  //   }
-  //   filteredPosts = tempList;
-  //   emit(FetchPostSuccessState());
-  // }
 }

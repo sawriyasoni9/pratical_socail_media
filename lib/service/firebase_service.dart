@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:practical_social_media/model/post_model.dart';
 import 'package:practical_social_media/model/user_model.dart';
 
-
 /// Firebase Service to handle Auth and Firestore operations
 class FirebaseService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -59,20 +58,7 @@ class FirebaseService {
     return UserModel.fromJson(doc.data()!);
   }
 
-  /// Fetch all posts from Firestore
-  // Stream<List<PostModel>> getStream() {
-  //   return _firestore
-  //       .collection('posts')
-  //       .orderBy('createdAt', descending: true)
-  //       .snapshots()
-  //       .map(
-  //         (snapshot) =>
-  //             snapshot.docs
-  //                 .map((doc) => PostModel.fromJson(doc.data()))
-  //                 .toList(),
-  //       );
-  // }
-
+  /// To get newly added posts
   Stream<QuerySnapshot<Map<String, dynamic>>> getStream() {
     return _firestore
         .collection('posts')
@@ -80,37 +66,7 @@ class FirebaseService {
         .snapshots();
   }
 
-
-  // Stream<PostModelData> fetchPosts({
-  //   String? userId,
-  //   int limit = 10,
-  //   DocumentSnapshot? lastDoc,
-  // }) {
-  //   Query query = _firestore.collection('posts');
-  //
-  //   if (userId != null) {
-  //     query = query.where('userId', isEqualTo: userId);
-  //   }
-  //
-  //   query = query.orderBy('createdAt', descending: true).limit(limit);
-  //
-  //   if (lastDoc != null) {
-  //     query = query.startAfterDocument(lastDoc);
-  //   }
-  //
-  //   return query.snapshots().map((snapshot) {
-  //     var lastDoc = snapshot.docs.isNotEmpty ? snapshot.docs.last : null;
-  //     var posts =
-  //         snapshot.docs
-  //             .map(
-  //               (doc) => PostModel.fromJson(doc.data() as Map<String, dynamic>),
-  //             )
-  //             .toList();
-  //
-  //     return PostModelData(lastDoc: lastDoc, posts: posts);
-  //   });
-  // }
-
+  /// To fetch posts with pagination
   Future<PostModelData> fetchPosts({
     String? userId,
     int limit = 10,

@@ -35,26 +35,6 @@ class AuthRepository {
     }
   }
 
-  /// ✅ Handle Firebase errors centrally
-  // void _handleFirebaseError(FirebaseAuthException e) {
-  //   switch (e.code) {
-  //     case 'email-already-in-use':
-  //       Fluttertoast.showToast(msg: 'Email already in use.');
-  //       break;
-  //     case 'invalid-email':
-  //       Fluttertoast.showToast(msg: 'Invalid email format.');
-  //       break;
-  //     case 'user-not-found':
-  //       Fluttertoast.showToast(msg: 'No user found for that email.');
-  //       break;
-  //     case 'wrong-password':
-  //       Fluttertoast.showToast(msg: 'Wrong password provided.');
-  //       break;
-  //     default:
-  //       Fluttertoast.showToast(msg: 'Auth error: ${e.message}');
-  //   }
-  // }
-
   String _handleFirebaseError(FirebaseAuthException e) {
     switch (e.code) {
       case 'email-already-in-use':
