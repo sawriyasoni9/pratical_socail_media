@@ -29,7 +29,7 @@ The app follows **Clean Architecture** principles:
 
 ## 🗃️ Local Storage & Persistence
 
-- **Firebase**
+- **Firebase Configuration**
     - Used as SQLite ORM for storing task data
     - Abstracted via `TaskRepository` for clean architecture
 
