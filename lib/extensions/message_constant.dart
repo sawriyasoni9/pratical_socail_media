@@ -28,6 +28,12 @@ class MessageConstant {
   static const String postMessageEmpty = 'Please enter post message.';
   static const String noPostAvailable =
       'No posts available. Be the first to post!';
+  static const String logoutSuccess =
+      'Logout successfully.';
+  static const String postedOn =
+      'Posted on: ';
+  static const String dateFormat =
+      'MMM d, yyyy';
 
   ///Filter Messages
   static const String filterBy = 'Filter By';

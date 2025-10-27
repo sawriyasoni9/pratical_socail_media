@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:practical_social_media/cubit/posts/posts_cubit.dart';
 import 'package:practical_social_media/cubit/posts/posts_state.dart';
+import 'package:practical_social_media/extensions/app_loader.dart';
 import 'package:practical_social_media/extensions/message_constant.dart';
 import 'package:practical_social_media/model/post_model.dart';
 import 'package:practical_social_media/model/user_model.dart';
@@ -37,7 +38,9 @@ class _PostsScreenState extends State<PostsScreen> {
     super.initState();
     widget.postsCubit.fetchCurrentUser();
     widget.postsCubit.configureListener();
-    widget.postsCubit.fetchPosts();
+    WidgetsBinding.instance.addPostFrameCallback((callback) {
+      widget.postsCubit.fetchPosts(showLoader: true);
+    });
   }
 
   void _addPost() {
@@ -122,17 +125,19 @@ class _PostsScreenState extends State<PostsScreen> {
         _refreshController.loadComplete();
 
         if (state is PostsLoadingState) {
-
-        }
-        if (state is LogoutSuccessState) {
-          Get.offAllNamed(AppRoutes.loginScreen);
-        }
-        if (state is PostsSuccessState) {
-          _postController.clear();
-        }
-        if (state is PostsErrorState) {
-
-          Fluttertoast.showToast(msg: 'Error: ${state.errorMessage}');
+          AppLoader.showLoader(context);
+        } else {
+          AppLoader.hideLoader();
+          if (state is LogoutSuccessState) {
+            Fluttertoast.showToast(msg: MessageConstant.logoutSuccess);
+            Get.offAllNamed(AppRoutes.loginScreen);
+          }
+          if (state is PostsSuccessState) {
+            _postController.clear();
+          }
+          if (state is PostsErrorState) {
+            Fluttertoast.showToast(msg: 'Error: ${state.errorMessage}');
+          }
         }
       },
       builder: (context, state) {
@@ -142,7 +147,7 @@ class _PostsScreenState extends State<PostsScreen> {
           return Center(
             child:
                 state is PostsLoadingState
-                    ? const CircularProgressIndicator()
+                    ? const SizedBox.shrink()
                     : const Text(
                       MessageConstant.noPostAvailable,
                       style: TextStyle(fontSize: 16, color: Colors.black54),

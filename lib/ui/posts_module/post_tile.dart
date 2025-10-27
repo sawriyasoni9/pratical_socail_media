@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:practical_social_media/extensions/message_constant.dart';
 import 'package:practical_social_media/model/post_model.dart';
 
 class PostTile extends StatefulWidget {
@@ -41,8 +42,8 @@ class _PostTileState extends State<PostTile> {
               child: RichText(
                 text: TextSpan(
                   children: [
-                    const TextSpan(
-                      text: 'Posted on: ',
+                    TextSpan(
+                      text: MessageConstant.postedOn,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.black45,
@@ -51,7 +52,7 @@ class _PostTileState extends State<PostTile> {
                     ),
                     TextSpan(
                       text: DateFormat(
-                        'MMM d, yyyy',
+                        MessageConstant.dateFormat,
                       ).format(widget.post.createdAt ?? DateTime.now()),
                       style: const TextStyle(
                         color: Colors.black45,

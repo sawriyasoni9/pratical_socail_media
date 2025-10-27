@@ -57,8 +57,10 @@ class PostsCubit extends Cubit<PostsState> {
   }
 
   /// Fetch posts in real-time and store them in local postData list
-  void fetchPosts() async {
-    emit(PostsLoadingState());
+  void fetchPosts({bool showLoader = false}) async {
+    if (showLoader) {
+      emit(PostsLoadingState());
+    }
 
     String? userId;
 
@@ -88,6 +90,7 @@ class PostsCubit extends Cubit<PostsState> {
 
   /// Fetch posts in real-time and store them in local postData list
   void logout() async {
+    emit(PostsLoadingState());
     try {
       await postRepository.logout();
       emit(LogoutSuccessState());
